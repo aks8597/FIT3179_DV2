@@ -1,0 +1,171 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 500,
+  "title": "Renewable Energy Usage and CO2 Emissions Across Australian States (2024)",
+  "background": "lightblue",
+  "layer": [
+    {
+      "data": {"graticule": true},
+      "mark": {
+        "type": "geoshape",
+        "fill": null,
+        "stroke": "white",
+        "strokeWidth": 0.5,
+        "opacity": 0.4
+      }
+    },
+    {
+      "data": {
+        "url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json",
+        "format": {"type": "topojson", "feature": "land"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "lightblue",
+        "stroke": "white",
+        "strokeWidth": 0.3
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/aks8597/FIT3179_Week9_Map/refs/heads/main/australian_states_simplified.topojson",
+        "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.STE_NAME21",
+          "from": {
+            "data": {
+              "values": [
+                {"State": "New South Wales", "Renewable": 10},
+                {"State": "Victoria", "Renewable": 8.8},
+                {"State": "Queensland", "Renewable": 11.2},
+                {"State": "Western Australia", "Renewable": 3.4},
+                {"State": "South Australia", "Renewable": 17.7},
+                {"State": "Tasmania", "Renewable": 42.3},
+                {"State": "Northern Territory", "Renewable": 2.3},
+                {"State": "Australian Capital Territory", "Renewable": 0}
+              ]
+            },
+            "key": "State",
+            "fields": ["Renewable"]
+          }
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "color": {
+          "field": "Renewable",
+          "type": "quantitative",
+          "scale": {"scheme": "greens", "domain": [0, 50]},
+          "legend": {"title": "Renewable Energy %"}
+        },
+        "tooltip": [
+          {"field": "properties.STE_NAME21", "title": "State/Territory"},
+          {
+            "field": "Renewable",
+            "type": "quantitative",
+            "title": "Renewable Energy %",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/aks8597/FIT3179_DV2/refs/heads/main/aus_states_co2_emissions_24_2.csv",
+        "format": {"type": "csv"}
+      },
+      "transform": [
+        {
+          "lookup": "States",
+          "from": {
+            "data": {
+              "values": [
+                {
+                  "States": "New South Wales",
+                  "Capital_City": "Sydney",
+                  "Latitude": -33.8688,
+                  "Longitude": 151.2093
+                },
+                {
+                  "States": "Victoria",
+                  "Capital_City": "Melbourne",
+                  "Latitude": -37.8136,
+                  "Longitude": 144.9631
+                },
+                {
+                  "States": "Queensland",
+                  "Capital_City": "Brisbane",
+                  "Latitude": -27.4698,
+                  "Longitude": 153.0251
+                },
+                {
+                  "States": "South Australia",
+                  "Capital_City": "Adelaide",
+                  "Latitude": -34.9285,
+                  "Longitude": 138.6007
+                },
+                {
+                  "States": "Western Australia",
+                  "Capital_City": "Perth",
+                  "Latitude": -31.9505,
+                  "Longitude": 115.8605
+                },
+                {
+                  "States": "Tasmania",
+                  "Capital_City": "Hobart",
+                  "Latitude": -42.8821,
+                  "Longitude": 147.3272
+                },
+                {
+                  "States": "Northern Territory",
+                  "Capital_City": "Darwin",
+                  "Latitude": -12.4634,
+                  "Longitude": 130.8456
+                }
+              ]
+            },
+            "key": "States",
+            "fields": ["Capital_City", "Latitude", "Longitude"]
+          }
+        },
+        {
+          "calculate": "isValid(datum['CO2 Emissions (million tonnes)']) ? datum['CO2 Emissions (million tonnes)'] : 0",
+          "as": "CO2_Emissions_Clean"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "opacity": 0.7,
+        "stroke": "black",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "longitude": {"field": "Longitude", "type": "quantitative"},
+        "latitude": {"field": "Latitude", "type": "quantitative"},
+        "size": {
+          "field": "CO2_Emissions_Clean",
+          "type": "quantitative",
+          "scale": {"range": [50, 300]},
+          "legend": {"title": "CO2 Emissions (million tonnes)"}
+        },
+        "color": {"value": "red"},
+        "tooltip": [
+          {"field": "Capital_City", "title": "Capital City"},
+          {"field": "States", "title": "State/Territory"},
+          {
+            "field": "CO2_Emissions_Clean",
+            "type": "quantitative",
+            "title": " State CO2 Emissions",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ],
+  "projection": {"type": "equirectangular", "scale": 700, "center": [133, -27]},
+  "config": {}
+}
