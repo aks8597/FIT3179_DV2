@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Socio-Economic Development in Australia</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f5f5f5;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .visualization {
+      background-color: white;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h2 {
+      color: #34495e;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    .description {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border-left: 4px solid #3498db;
+    }
+    .annotation {
+      font-style: italic;
+      color: #555;
+      margin: 15px 0;
+      padding: 10px;
+      border-left: 3px solid #3498db;
+      background-color: #f8f9fa;
+    }
+    .vis-container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .vis-wrapper {
+      flex: 1;
+    }
+    .annotation-side {
+      flex: 0 0 300px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+    .slider-container {
+      background-color: #e8f4fc;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border: 1px solid #b3e0ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Socio-Economic Development in Australia</h1>
+    
+    <!-- First Visualization with REAL Filtering -->
+    <div class="visualization">
+      <h2>Renewable Energy Usage and CO2 Emissions by State (2024)</h2>
+      
+      <div class="description">
+        <p>This visualization shows the relationship between renewable energy adoption and CO2 emissions across Australian states and territories. The map colors represent renewable energy percentage (green = higher renewable energy), while the red bubbles show CO2 emissions levels with larger bubbles indicating higher emissions.</p>
+      </div>
+      
+      <div class="slider-container">
+        <div>
+          <label for="renewableSlider"><strong>Filter:</strong> Minimum Renewable Energy: </label>
+          <span id="sliderValue">0%</span>
+        </div>
+        <input type="range" id="renewableSlider" min="0" max="50" value="0" step="1" style="width: 100%;">
+      </div>
+      
+      <div class="vis-container">
+        <div class="vis-wrapper">
+          <div id="vis1"></div>
+        </div>
+        <div class="annotation-side">
+          <h4>Key Insights:</h4>
+          <p class="annotation">Tasmania leads the nation with 42.3% renewable energy usage while maintaining the lowest CO2 emissions, demonstrating a successful transition to sustainable energy sources.</p>
+          <p class="annotation">Western Australia shows room for improvement with only 3.4% renewable energy despite significant solar potential.</p>
+          <p class="annotation">The correlation between high renewable adoption and low emissions is clearly visible, particularly in Tasmania and South Australia.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Second Visualization -->
+    <div class="visualization">
+      <h2>Cost of Living Concern Index Across Australia (2024)</h2>
+      
+      <div class="description">
+        <p>This choropleth map displays the Cost of Living Concern Index based on survey data collected from April-May 2024. Darker red colors indicate higher levels of concern about cost of living pressures.</p>
+      </div>
+      
+      <div class="vis-container">
+        <div class="vis-wrapper">
+          <div id="vis2"></div>
+        </div>
+        <div class="annotation-side">
+          <h4>Key Insights:</h4>
+          <p class="annotation">Queensland residents report the highest cost of living concerns at 84.38, potentially reflecting housing and energy price pressures.</p>
+          <p class="annotation">Tasmania shows relatively low concern levels (25.0) despite economic challenges, possibly due to lower population density and different cost structures.</p>
+          <p class="annotation">The Northern Territory and ACT show the lowest concern levels, which may correlate with different demographic and economic factors in these territories.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Data Sources -->
+    <div class="visualization">
+      <h2>Data Sources and Methodology</h2>
+      <div class="description">
+        <p><strong>Data Sources:</strong> Australian Energy Statistics (2024), National Greenhouse Gas Inventory (2024), Australian Bureau of Statistics Survey (April-May 2024), Australian Statistical Geography Standard (ASGS)</p>
+        <p><strong>Methodology:</strong> Data normalized and aggregated at state/territory level for comparative analysis. Renewable energy percentages represent the proportion of total energy generation from renewable sources.</p>
+      </div>
+    </div>
+  </div>
+  
+  <script type="text/javascript">
+    let view1, view2;
+    
+    // Modified Vega-Lite specification with filtering
+    const renewableSpec = {
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+      "width": 500,
+      "height": 400,
+      "title": "Renewable Energy Usage and CO2 Emissions Across Australian States (2024)",
+      "background": "lightblue",
+      "params": [
+        {
+          "name": "renewableFilter",
+          "value": 0,
+          "bind": {
+            "input": "range",
+            "min": 0,
+            "max": 50,
+            "step": 1,
+            "name": "Min Renewable Energy: "
+          }
+        }
+      ],
+      "layer": [
+        {
+          "data": {"graticule": true},
+          "mark": {"type": "geoshape", "fill": null, "stroke": "white", "strokeWidth": 0.5, "opacity": 0.4}
+        },
+        {
+          "data": {
+            "url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json",
+            "format": {"type": "topojson", "feature": "land"}
+          },
+          "mark": {"type": "geoshape", "fill": "lightblue", "stroke": "white", "strokeWidth": 0.3}
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/aks8597/FIT3179_Week9_Map/refs/heads/main/australian_states_simplified.topojson",
+            "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
+          },
+          "transform": [
+            {
+              "lookup": "properties.STE_NAME21",
+              "from": {
+                "data": {
+                  "values": [
+                    {"State": "New South Wales", "Renewable": 10},
+                    {"State": "Victoria", "Renewable": 8.8},
+                    {"State": "Queensland", "Renewable": 11.2},
+                    {"State": "Western Australia", "Renewable": 3.4},
+                    {"State": "South Australia", "Renewable": 17.7},
+                    {"State": "Tasmania", "Renewable": 42.3},
+                    {"State": "Northern Territory", "Renewable": 2.3},
+                    {"State": "Australian Capital Territory", "Renewable": 0}
+                  ]
+                },
+                "key": "State",
+                "fields": ["Renewable"]
+              }
+            },
+            {
+              "filter": "datum.Renewable >= renewableFilter"
+            }
+          ],
+          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1.5},
+          "encoding": {
+            "color": {
+              "field": "Renewable",
+              "type": "quantitative",
+              "scale": {"scheme": "greens", "domain": [0, 50]},
+              "legend": {"title": "Renewable Energy %"}
+            },
+            "tooltip": [
+              {"field": "properties.STE_NAME21", "title": "State/Territory"},
+              {"field": "Renewable", "type": "quantitative", "title": "Renewable Energy %", "format": ".1f"}
+            ]
+          }
+        },
+        {
+          "data": {
+            "values": [
+              {"States": "New South Wales", "Capital_City": "Sydney", "Latitude": -33.8688, "Longitude": 151.2093, "CO2_Emissions": 72.1},
+              {"States": "Victoria", "Capital_City": "Melbourne", "Latitude": -37.8136, "Longitude": 144.9631, "CO2_Emissions": 51.2},
+              {"States": "Queensland", "Capital_City": "Brisbane", "Latitude": -27.4698, "Longitude": 153.0251, "CO2_Emissions": 87.8},
+              {"States": "South Australia", "Capital_City": "Adelaide", "Latitude": -34.9285, "Longitude": 138.6007, "CO2_Emissions": 10},
+              {"States": "Western Australia", "Capital_City": "Perth", "Latitude": -31.9505, "Longitude": 115.8605, "CO2_Emissions": 69.4},
+              {"States": "Tasmania", "Capital_City": "Hobart", "Latitude": -42.8821, "Longitude": 147.3272, "CO2_Emissions": 2.7},
+              {"States": "Northern Territory", "Capital_City": "Darwin", "Latitude": -12.4634, "Longitude": 130.8456, "CO2_Emissions": 9.8}
+            ]
+          },
+          "transform": [
+            {
+              "filter": "datum.States != 'Australian Capital Territory'"
+            }
+          ],
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "opacity": 0.7,
+            "stroke": "black",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "longitude": {"field": "Longitude", "type": "quantitative"},
+            "latitude": {"field": "Latitude", "type": "quantitative"},
+            "size": {
+              "field": "CO2_Emissions",
+              "type": "quantitative",
+              "scale": {"range": [50, 300]},
+              "legend": {"title": "CO2 Emissions (million tonnes)"}
+            },
+            "color": {"value": "red"},
+            "tooltip": [
+              {"field": "Capital_City", "title": "Capital City"},
+              {"field": "States", "title": "State/Territory"},
+              {"field": "CO2_Emissions", "type": "quantitative", "title": "CO2 Emissions", "format": ".1f"}
+            ]
+          }
+        }
+      ],
+      "projection": {
+        "type": "equirectangular",
+        "scale": 700,
+        "center": [133, -27]
+      }
+    };
+
+    // Load the first visualization with REAL filtering
+    vegaEmbed('#vis1', renewableSpec)
+      .then(function(result) {
+        console.log('Renewable Energy & CO2 Emissions map loaded successfully!');
+        view1 = result.view;
+      })
+      .catch(function(error) {
+        console.error('Error loading renewable energy map:', error);
+      });
+
+    // Load the second visualization (original cost of living map)
+    vegaEmbed('#vis2', 'visualization.vl (2) (1).json')
+      .then(function(result) {
+        console.log('Cost of Living Concern map loaded successfully!');
+        view2 = result.view;
+      })
+      .catch(function(error) {
+        console.error('Error loading cost of living map:', error);
+      });
+
+    // Update slider display
+    const slider = document.getElementById('renewableSlider');
+    const sliderValue = document.getElementById('sliderValue');
+    
+    slider.addEventListener('input', function() {
+      sliderValue.textContent = this.value + '%';
+      
+      // Update the Vega-Lite parameter
+      if (view1) {
+        view1.signal('renewableFilter', parseInt(this.value)).run();
+      }
+    });
+  </script>
+</body>
+</html>
