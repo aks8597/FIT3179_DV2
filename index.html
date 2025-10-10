@@ -80,7 +80,7 @@
       <h2>Renewable Energy Usage and CO2 Emissions by State (2024)</h2>
       
       <div class="description">
-        <p>This visualization shows the relationship between renewable energy adoption and CO2 emissions across Australian states and territories. The map colors represent renewable energy percentage (green = higher renewable energy), while the red bubbles show CO2 emissions levels with larger bubbles indicating higher emissions.</p>
+        <p>This visualisation shows the relationship between renewable energy adoption and CO2 emissions across Australian states and territories. The map colors represent renewable energy percentage (green = higher renewable energy), while the red bubbles show CO2 emissions levels with larger bubbles indicating higher emissions. Additionally, please note that the data for NSW and ACT was collected as a whole. </p>
       </div>
       
       <div class="slider-container">
@@ -104,12 +104,12 @@
       </div>
     </div>
     
-    <!-- Second Visualization -->
+    <!-- Second Visualization - Education Expenditure vs NAPLAN Scores -->
     <div class="visualization">
-      <h2>Cost of Living Concern Index Across Australia (2024)</h2>
+      <h2>Education Investment and Student Performance Across Australian States</h2>
       
       <div class="description">
-        <p>This choropleth map displays the Cost of Living Concern Index based on survey data collected from April-May 2024. Darker red colors indicate higher levels of concern about cost of living pressures.</p>
+        <p>This dual-axis chart compares education expenditure (2022-2023) with Year 7 NAPLAN numeracy scores across Australian states and territories. The blue bars represent financial investment in education, while the orange line shows academic performance outcomes.</p>
       </div>
       
       <div class="vis-container">
@@ -118,9 +118,10 @@
         </div>
         <div class="annotation-side">
           <h4>Key Insights:</h4>
-          <p class="annotation">Queensland residents report the highest cost of living concerns at 84.38, potentially reflecting housing and energy price pressures.</p>
-          <p class="annotation">Tasmania shows relatively low concern levels (25.0) despite economic challenges, possibly due to lower population density and different cost structures.</p>
-          <p class="annotation">The Northern Territory and ACT show the lowest concern levels, which may correlate with different demographic and economic factors in these territories.</p>
+          <p class="annotation">New South Wales has the highest education expenditure but doesn't lead in NAPLAN scores, suggesting that higher spending doesn't always directly correlate with better academic outcomes.</p>
+          <p class="annotation">The Northern Territory shows the lowest NAPLAN scores despite moderate expenditure, highlighting potential challenges in educational delivery and student support.</p>
+          <p class="annotation">Victoria achieves strong academic results with the second-highest expenditure, demonstrating effective use of education funding.</p>
+          <p class="annotation">Tasmania and ACT show that moderate investment can yield competitive academic outcomes when compared to higher-spending states.</p>
         </div>
       </div>
     </div>
@@ -129,7 +130,7 @@
     <div class="visualization">
       <h2>Data Sources and Methodology</h2>
       <div class="description">
-        <p><strong>Data Sources:</strong> Australian Energy Statistics (2024), Australian Government Clean Energy Regulator (2025), Australian Statistical Geography Standard (ASGS)</p>
+        <p><strong>Data Sources:</strong> Australian Energy Statistics (2024), Australian Government Clean Energy Regulator (2025), Australian Statistical Geography Standard (ASGS), Australian Curriculum Assessment and Reporting Authority (NAPLAN), Australian Government Education Funding</p>
       </div>
     </div>
   </div>
@@ -141,7 +142,7 @@
     const renewableSpec = {
       "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
       "width": 500,
-      "height": 400,
+      "height": 500,
       "title": "Renewable Energy Usage and CO2 Emissions Across Australian States (2024)",
       "background": "lightblue",
       "params": [
@@ -187,7 +188,7 @@
                     {"State": "South Australia", "Renewable": 17.7},
                     {"State": "Tasmania", "Renewable": 42.3},
                     {"State": "Northern Territory", "Renewable": 2.3},
-                    {"State": "Australian Capital Territory", "Renewable": 0}
+                    {"State": "Australian Capital Territory", "Renewable": 10}
                   ]
                 },
                 "key": "State",
@@ -271,14 +272,14 @@
         console.error('Error loading renewable energy map:', error);
       });
 
-    // Load the second visualization (original cost of living map)
-    vegaEmbed('#vis2', 'visualization.vl (2) (1).json')
+    // Load the second visualization from external JSON file
+    vegaEmbed('#vis2', 'visualization.vl (5).json')
       .then(function(result) {
-        console.log('Cost of Living Concern map loaded successfully!');
+        console.log('Education Expenditure vs NAPLAN Scores chart loaded successfully!');
         view2 = result.view;
       })
       .catch(function(error) {
-        console.error('Error loading cost of living map:', error);
+        console.error('Error loading education chart:', error);
       });
 
     // Update slider display
