@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Australian States: Education Expenditure vs NAPLAN Scores (Year 7 Numeracy)",
+  "width": 800,
+  "height": 600,
+  "autosize": {"type": "fit", "contains": "padding"},
+  "padding": 20,
+  "data": {
+    "url": "https://raw.githubusercontent.com/aks8597/FIT3179_DV2/refs/heads/main/aus_states_education_exp.csv"
+  },
+  "transform": [
+    {
+      "lookup": "State",
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/aks8597/FIT3179_DV2/refs/heads/main/aus_states_naplan_scores.csv"
+        },
+        "key": "State",
+        "fields": ["Average NAPLAN Score for Year 7 Students in Numeracy"]
+      }
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "bar", "color": "#a5dba0"},
+      "encoding": {
+        "x": {
+          "field": "State",
+          "type": "nominal",
+          "title": "State/Territory",
+          "axis": {"labelAngle": -45},
+          "sort": null
+        },
+        "y": {
+          "field": "Expenditure (billions)",
+          "type": "quantitative",
+          "title": "Education Expenditure ($ millions)",
+          "axis": {"titleColor": "#a5dba0"}
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {
+            "field": "Expenditure (billions)",
+            "type": "quantitative",
+            "title": "Expenditure ($M)",
+            "format": "$,.0f"
+          },
+          {
+            "field": "Average NAPLAN Score for Year 7 Students in Numeracy",
+            "type": "quantitative",
+            "title": "NAPLAN Score",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "line",
+        "color": "#ffeb0e",
+        "strokeWidth": 3,
+        "point": true
+      },
+      "encoding": {
+        "x": {
+          "field": "State",
+          "type": "nominal",
+          "title": "State/Territory",
+          "sort": null
+        },
+        "y": {
+          "field": "Average NAPLAN Score for Year 7 Students in Numeracy",
+          "type": "quantitative",
+          "title": "NAPLAN Score (Year 7 Numeracy)",
+          "axis": {"titleColor": "#1f77b4", "grid": false}
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {
+            "field": "Average NAPLAN Score for Year 7 Students in Numeracy",
+            "type": "quantitative",
+            "title": "NAPLAN Score",
+            "format": ".1f"
+          }
+        ]
+      }
+    }
+  ],
+  "resolve": {"scale": {"y": "independent"}},
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"labelFontSize": 12, "titleFontSize": 14},
+    "title": {"fontSize": 16, "anchor": "middle", "offset": 20}
+  }
+}
