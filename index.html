@@ -119,9 +119,28 @@
         <div class="annotation-side">
           <h4>Key Insights:</h4>
           <p class="annotation">New South Wales has the highest education expenditure but doesn't lead in NAPLAN scores, suggesting that higher spending doesn't always directly correlate with better academic outcomes.</p>
-          <p class="annotation">The Northern Territory shows the lowest NAPLAN scores despite moderate expenditure, highlighting potential challenges in educational delivery and student support.</p>
           <p class="annotation">Victoria achieves strong academic results with the second-highest expenditure, demonstrating effective use of education funding.</p>
-          <p class="annotation">Tasmania and ACT show that moderate investment can yield competitive academic outcomes when compared to higher-spending states.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Third Visualization - Grocery Prices -->
+    <div class="visualization">
+      <h2>Grocery Prices Across Major Australian Cities in 2024</h2>
+      
+      <div class="description">
+        <p>This chart compares the prices of essential grocery items across major Australian cities. The grouped bar chart shows the cost of milk, bread, and eggs in each city, providing insight into cost of living variations across different urban centers.</p>
+      </div>
+      
+      <div class="vis-container">
+        <div class="vis-wrapper">
+          <div id="vis3"></div>
+        </div>
+        <div class="annotation-side">
+          <h4>Key Insights:</h4>
+          <p class="annotation">Canberra stands out as the most expensive city for grocery items overall, with the highest prices for milk and eggs among all major cities.</p>
+          <p class="annotation">Brisbane appears to be the most affordable city, showing the lowest prices for milk and bread across the major urban centers.</p>
+          <p class="annotation">Eggs consistently represent the highest grocery expense across all cities, while milk tends to be the most affordable staple item.</p>
         </div>
       </div>
     </div>
@@ -130,13 +149,13 @@
     <div class="visualization">
       <h2>Data Sources and Methodology</h2>
       <div class="description">
-        <p><strong>Data Sources:</strong> Australian Energy Statistics (2024), Australian Government Clean Energy Regulator (2025), Australian Statistical Geography Standard (ASGS), Australian Curriculum Assessment and Reporting Authority (NAPLAN), Australian Government Education Funding</p>
+        <p><strong>Data Sources:</strong> Australian Energy Statistics (2024), Australian Government Clean Energy Regulator (2025), Australian Statistical Geography Standard (ASGS), Australian Curriculum Assessment and Reporting Authority (NAPLAN), Australian Government Education Funding, Jacaranda Finance (2024)</p>
       </div>
     </div>
   </div>
   
   <script type="text/javascript">
-    let view1, view2;
+    let view1, view2, view3;
     
     // Modified Vega-Lite specification with filtering
     const renewableSpec = {
@@ -280,6 +299,16 @@
       })
       .catch(function(error) {
         console.error('Error loading education chart:', error);
+      });
+
+    // Load the third visualization (grocery prices) from external JSON file
+    vegaEmbed('#vis3', 'Australian Cities Grocery Prices.json')
+      .then(function(result) {
+        console.log('Grocery Prices chart loaded successfully!');
+        view3 = result.view;
+      })
+      .catch(function(error) {
+        console.error('Error loading grocery prices chart:', error);
       });
 
     // Update slider display
