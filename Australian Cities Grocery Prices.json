@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Grocery Prices in Major Australian Cities (AUD$)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aks8597/FIT3179_DV2/refs/heads/main/aus_cities_cost_of_groceries.csv"
+  },
+  "transform": [
+    {"filter": "datum['Major Cities'] && length(datum['Major Cities']) > 0"},
+    {
+      "fold": [
+        "Milk (1L) in AUD$",
+        "Loaf of Fresh White Bread (AUD$)",
+        "12 Eggs (AUD$)"
+      ],
+      "as": ["Grocery Item", "Price"]
+    },
+    {
+      "fold": [
+        "Milk (1L) in AUD$",
+        "Loaf of Fresh White Bread (AUD$)",
+        "12 Eggs (AUD$)"
+      ],
+      "as": ["Grocery Item", "Price"]
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "Major Cities",
+      "type": "nominal",
+      "axis": {"title": "City", "labelAngle": 0},
+      "sort": null
+    },
+    "y": {
+      "field": "Price",
+      "type": "quantitative",
+      "axis": {"title": "Price (AUD$)"}
+    },
+    "color": {
+      "field": "Grocery Item",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Milk (1L) in AUD$",
+          "Loaf of Fresh White Bread (AUD$)",
+          "12 Eggs (AUD$)"
+        ],
+        "range": ["#a7d7c5", "#f7e4c4", "#c9e0f0"]
+      },
+      "legend": {
+        "title": "Grocery Item",
+        "labelExpr": "if(datum.value == 'Milk (1L) in AUD$', 'Milk (1L)', if(datum.value == 'Loaf of Fresh White Bread (AUD$)', 'Bread', 'Eggs'))"
+      }
+    },
+    "xOffset": {"field": "Grocery Item"}
+  },
+  "width": 500,
+  "height": 400,
+  "config": {}
+}
