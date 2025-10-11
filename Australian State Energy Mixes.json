@@ -21,14 +21,14 @@
     "header": {"labels": false, "title": null, "labelFontSize": 0}
   },
   "spec": {
-    "width": 70,
-    "height": 100,
+    "width": 50,
+    "height": 50,
     "layer": [
       {
         "mark": {
           "type": "arc",
-          "innerRadius": 60,
-          "outerRadius": 80,
+          "innerRadius": 50,
+          "outerRadius": 70,
           "stroke": "#fff",
           "strokeWidth": 1
         },
