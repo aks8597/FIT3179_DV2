@@ -76,11 +76,11 @@
           "field": "Average NAPLAN Score for Year 7 Students in Numeracy",
           "type": "quantitative",
           "title": "NAPLAN Score (Year 7 Numeracy)",
-          "axis": {"titleColor": "#1f77b4", "grid": false}
+          "axis": {"titleColor": "#FFB300", "grid": false}
         },
         "color": {
           "datum": "NAPLAN Score",
-          "scale": {"range": ["#1f77b4"]},
+          "scale": {"range": ["#FFB300"]},
           "legend": {"title": null, "symbolType": "square"}
         },
         "tooltip": [
