@@ -1,0 +1,73 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Average Weekly Salary vs Median Weekly Rent Gap Across Australian States",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aks8597/FIT3179_DV2/refs/heads/main/aus_states_salary_vs_rent.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum['Average Weekly Salary ($)'] - datum['Median Weekly Rent ($)']",
+      "as": "Disposable Income"
+    }
+  ],
+  "layer": [
+    {
+      "mark": "rule",
+      "encoding": {
+        "x": {
+          "field": "Median Weekly Rent ($)",
+          "type": "quantitative",
+          "title": "Weekly Amount (AUD$)",
+          "axis": {"format": "$.0f"}
+        },
+        "x2": {"field": "Average Weekly Salary ($)"},
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "title": "State/Territory",
+          "sort": "-x"
+        },
+        "color": {"value": "#95a5a6"}
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 80},
+      "encoding": {
+        "x": {"field": "Median Weekly Rent ($)", "type": "quantitative"},
+        "y": {"field": "State", "type": "nominal"},
+        "color": {"value": "#e74c3c"},
+        "tooltip": [
+          {"field": "State", "title": "State"},
+          {"field": "Median Weekly Rent ($)", "title": "Rent", "format": "$.0f"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 80},
+      "encoding": {
+        "x": {"field": "Average Weekly Salary ($)", "type": "quantitative"},
+        "y": {"field": "State", "type": "nominal"},
+        "color": {"value": "#2ecc71"},
+        "tooltip": [
+          {"field": "State", "title": "State"},
+          {
+            "field": "Average Weekly Salary ($)",
+            "title": "Salary",
+            "format": "$.0f"
+          },
+          {
+            "field": "Disposable Income",
+            "title": "After Rent",
+            "format": "$.0f"
+          }
+        ]
+      }
+    }
+  ],
+  "width": 600,
+  "height": 400,
+  "config": {
+    "axis": {"labelFontSize": 11, "titleFontSize": 12},
+    "title": {"fontSize": 14, "anchor": "middle", "offset": 20}
+  }
+}
