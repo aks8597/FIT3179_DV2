@@ -51,7 +51,7 @@
                 {"State": "South Australia", "Renewable": 17.7},
                 {"State": "Tasmania", "Renewable": 42.3},
                 {"State": "Northern Territory", "Renewable": 2.3},
-                {"State": "Australian Capital Territory", "Renewable": 0}
+                {"State": "Australian Capital Territory", "Renewable": 10}
               ]
             },
             "key": "State",
