@@ -1,0 +1,41 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "People Aged 20-24 with Year 12 or Equivalent Qualification in Australia (%)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aks8597/FIT3179_DV2/refs/heads/main/no_of_people_completed_yr_12.csv"
+  },
+  "mark": {
+    "type": "line",
+    "point": {"filled": true, "color": "#FFB300", "size": 60},
+    "strokeWidth": 2,
+    "color": "#FFB300"
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "temporal",
+      "axis": {"title": "Year", "format": "%Y", "grid": false}
+    },
+    "y": {
+      "field": "Percentage",
+      "type": "quantitative",
+      "axis": {"title": "Percentage (%)", "grid": true},
+      "scale": {"domain": [70, 90]}
+    },
+    "tooltip": [
+      {"field": "Year", "type": "temporal", "title": "Year", "format": "%Y"},
+      {
+        "field": "Percentage",
+        "type": "quantitative",
+        "title": "Percentage",
+        "format": ".1f"
+      }
+    ]
+  },
+  "width": 600,
+  "height": 400,
+  "config": {
+    "axis": {"labelFontSize": 12, "titleFontSize": 14},
+    "title": {"fontSize": 16, "anchor": "middle"}
+  }
+}
