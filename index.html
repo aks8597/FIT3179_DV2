@@ -166,6 +166,26 @@
       </div>
     </div>
 
+    <!-- New Fifth Visualization - Year 12 Qualification Trends -->
+    <div class="visualization">
+      <h2>Year 12 Qualification Trends Among Young Australians (2014-2024)</h2>
+      
+      <div class="description">
+        <p>This line chart shows the percentage of people aged 20-24 who have completed Year 12 or equivalent qualifications in Australia over the past decade. The trend reveals the progress in educational attainment among young Australians.</p>
+      </div>
+      
+      <div class="vis-container">
+        <div class="vis-wrapper">
+          <div id="vis5"></div>
+        </div>
+        <div class="annotation-side">
+          <h4>Key Insights:</h4>
+          <p class="annotation">There has been a consistent upward trend in Year 12 completion rates, increasing from 76.8% in 2014 to 86.2% in 2024, showing significant improvement in educational attainment.</p>
+          <p class="annotation">By 2024, 86.2% of young Australians aged 20-24 have achieved Year 12 or equivalent qualifications, indicating strong progress toward universal secondary education completion.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Third Visualization - Grocery Prices -->
     <div class="visualization">
       <h2>Grocery Prices Across Major Australian Cities in 2024</h2>
@@ -197,7 +217,7 @@
   </div>
   
   <script type="text/javascript">
-    let view1, view2, view3, view4;
+    let view1, view2, view3, view4, view5;
     
 
   // Load the first visualization (map) from GitHub
@@ -238,6 +258,16 @@
     })
     .catch(function(error) {
       console.error('Error loading energy mixes chart:', error);
+    });
+
+  // Load the fifth visualization from GitHub
+  vegaEmbed('#vis5','People with a Qualification of Year 12 or Higher.json')
+    .then(function(result) {
+      console.log('Year 12 Qualification Trends chart loaded successfully!');
+      view5 = result.view;
+    })
+    .catch(function(error) {
+      console.error('Error loading Year 12 qualification chart:', error);
     });
 
   // Update slider display and connect to Vega-Lite parameter
