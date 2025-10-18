@@ -93,34 +93,34 @@
   <div class="container">
     <h1>Australia's Development Landscape: Energy, Education & Economy</h1>
     
-    <!-- First Visualization with REAL Filtering -->
-    <div class="visualization">
-      <h2>Renewable Energy Usage and CO2 Emissions by State (2024)</h2>
-      
-      <div class="description">
-        <p>This visualisation shows the relationship between renewable energy adoption and CO2 emissions across Australian states and territories. The map colors represent renewable energy percentage (green = higher renewable energy), while the red bubbles show CO2 emissions levels with larger bubbles indicating higher emissions. Additionally, please note that the data for NSW and ACT was collected as a whole. </p>
-      </div>
-      
-      <div class="slider-container">
-        <div>
-          <label for="renewableSlider"><strong>Filter:</strong> Minimum Renewable Energy: </label>
-          <span id="sliderValue">0%</span>
-        </div>
-        <input type="range" id="renewableSlider" min="0" max="50" value="0" step="1" style="width: 100%;">
-      </div>
-      
-      <div class="vis-container">
-        <div class="vis-wrapper">
-          <div id="vis1"></div>
-        </div>
-        <div class="annotation-side">
-          <h4>Key Insights:</h4>
-          <p class="annotation">Tasmania leads the nation with 42.3% renewable energy usage while maintaining the lowest CO2 emissions, demonstrating a successful transition to sustainable energy sources.</p>
-          <p class="annotation">Western Australia shows room for improvement with only 3.4% renewable energy despite significant solar potential.</p>
-          <p class="annotation">The correlation between high renewable adoption and low emissions is clearly visible, particularly in Tasmania and South Australia.</p>
-        </div>
-      </div>
+    <!-- First Visualization with External Vega-Lite File -->
+  <div class="visualization">
+  <h2>Renewable Energy Usage and CO2 Emissions by State (2024)</h2>
+  
+  <div class="description">
+    <p>This visualisation shows the relationship between renewable energy adoption and CO2 emissions across Australian states and territories. The map colors represent renewable energy percentage (green = higher renewable energy), while the red bubbles show CO2 emissions levels with larger bubbles indicating higher emissions. Additionally, please note that the data for NSW and ACT was collected as a whole. </p>
+  </div>
+  
+  <div class="slider-container">
+    <div>
+      <label for="renewableSlider"><strong>Filter:</strong> Minimum Renewable Energy: </label>
+      <span id="sliderValue">0%</span>
     </div>
+    <input type="range" id="renewableSlider" min="0" max="50" value="0" step="1" style="width: 100%;">
+  </div>
+  
+  <div class="vis-container">
+    <div class="vis-wrapper">
+      <div id="vis1"></div>
+    </div>
+    <div class="annotation-side">
+      <h4>Key Insights:</h4>
+      <p class="annotation">Tasmania leads the nation with 42.3% renewable energy usage while maintaining the lowest CO2 emissions, demonstrating a successful transition to sustainable energy sources.</p>
+      <p class="annotation">Western Australia shows room for improvement with only 3.4% renewable energy despite significant solar potential.</p>
+      <p class="annotation">The correlation between high renewable adoption and low emissions is clearly visible, particularly in Tasmania and South Australia.</p>
+    </div>
+  </div>
+</div>
 
     <!-- New Fourth Visualization - Energy Mixes -->
     <div class="visualization">
@@ -199,182 +199,59 @@
   <script type="text/javascript">
     let view1, view2, view3, view4;
     
-    // Modified Vega-Lite specification with filtering
-    const renewableSpec = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "width": 500,
-      "height": 500,
-      "title": "Renewable Energy Usage and CO2 Emissions Across Australian States (2024)",
-      "background": "lightblue",
-      "params": [
-        {
-          "name": "renewableFilter",
-          "value": 0,
-          "bind": {
-            "input": "range",
-            "min": 0,
-            "max": 50,
-            "step": 1,
-            "name": "Min Renewable Energy: "
-          }
-        }
-      ],
-      "layer": [
-        {
-          "data": {"graticule": true},
-          "mark": {"type": "geoshape", "fill": null, "stroke": "white", "strokeWidth": 0.5, "opacity": 0.4}
-        },
-        {
-          "data": {
-            "url": "https://cdn.jsdelivr.net/npm/vega-datasets@v1.29.0/data/world-110m.json",
-            "format": {"type": "topojson", "feature": "land"}
-          },
-          "mark": {"type": "geoshape", "fill": "lightblue", "stroke": "white", "strokeWidth": 0.3}
-        },
-        {
-          "data": {
-            "url": "https://raw.githubusercontent.com/aks8597/FIT3179_Week9_Map/refs/heads/main/australian_states_simplified.topojson",
-            "format": {"type": "topojson", "feature": "STE_2021_AUST_GDA2020"}
-          },
-          "transform": [
-            {
-              "lookup": "properties.STE_NAME21",
-              "from": {
-                "data": {
-                  "values": [
-                    {"State": "New South Wales", "Renewable": 10},
-                    {"State": "Victoria", "Renewable": 8.8},
-                    {"State": "Queensland", "Renewable": 11.2},
-                    {"State": "Western Australia", "Renewable": 3.4},
-                    {"State": "South Australia", "Renewable": 17.7},
-                    {"State": "Tasmania", "Renewable": 42.3},
-                    {"State": "Northern Territory", "Renewable": 2.3},
-                    {"State": "Australian Capital Territory", "Renewable": 10}
-                  ]
-                },
-                "key": "State",
-                "fields": ["Renewable"]
-              }
-            },
-            {
-              "filter": "datum.Renewable >= renewableFilter"
-            }
-          ],
-          "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1.5},
-          "encoding": {
-            "color": {
-              "field": "Renewable",
-              "type": "quantitative",
-              "scale": {"scheme": "greens", "domain": [0, 50]},
-              "legend": {"title": "Renewable Energy %"}
-            },
-            "tooltip": [
-              {"field": "properties.STE_NAME21", "title": "State/Territory"},
-              {"field": "Renewable", "type": "quantitative", "title": "Renewable Energy %", "format": ".1f"}
-            ]
-          }
-        },
-        {
-          "data": {
-            "values": [
-              {"States": "New South Wales", "Capital_City": "Sydney", "Latitude": -33.8688, "Longitude": 151.2093, "CO2_Emissions": 72.1},
-              {"States": "Victoria", "Capital_City": "Melbourne", "Latitude": -37.8136, "Longitude": 144.9631, "CO2_Emissions": 51.2},
-              {"States": "Queensland", "Capital_City": "Brisbane", "Latitude": -27.4698, "Longitude": 153.0251, "CO2_Emissions": 87.8},
-              {"States": "South Australia", "Capital_City": "Adelaide", "Latitude": -34.9285, "Longitude": 138.6007, "CO2_Emissions": 10},
-              {"States": "Western Australia", "Capital_City": "Perth", "Latitude": -31.9505, "Longitude": 115.8605, "CO2_Emissions": 69.4},
-              {"States": "Tasmania", "Capital_City": "Hobart", "Latitude": -42.8821, "Longitude": 147.3272, "CO2_Emissions": 2.7},
-              {"States": "Northern Territory", "Capital_City": "Darwin", "Latitude": -12.4634, "Longitude": 130.8456, "CO2_Emissions": 9.8}
-            ]
-          },
-          "transform": [
-            {
-              "filter": "datum.States != 'Australian Capital Territory'"
-            }
-          ],
-          "mark": {
-            "type": "point",
-            "filled": true,
-            "opacity": 0.7,
-            "stroke": "black",
-            "strokeWidth": 1
-          },
-          "encoding": {
-            "longitude": {"field": "Longitude", "type": "quantitative"},
-            "latitude": {"field": "Latitude", "type": "quantitative"},
-            "size": {
-              "field": "CO2_Emissions",
-              "type": "quantitative",
-              "scale": {"range": [50, 300]},
-              "legend": {"title": "CO2 Emissions (million tonnes)"}
-            },
-            "color": {"value": "red"},
-            "tooltip": [
-              {"field": "Capital_City", "title": "Capital City"},
-              {"field": "States", "title": "State/Territory"},
-              {"field": "CO2_Emissions", "type": "quantitative", "title": "CO2 Emissions", "format": ".1f"}
-            ]
-          }
-        }
-      ],
-      "projection": {
-        "type": "equirectangular",
-        "scale": 700,
-        "center": [133, -27]
-      }
-    };
 
-    // Load the first visualization with REAL filtering
-    vegaEmbed('#vis1', renewableSpec)
-      .then(function(result) {
-        console.log('Renewable Energy & CO2 Emissions map loaded successfully!');
-        view1 = result.view;
-      })
-      .catch(function(error) {
-        console.error('Error loading renewable energy map:', error);
-      });
-
-    // Load the second visualization from external JSON file
-    vegaEmbed('#vis2', 'visualization.vl (5).json')
-      .then(function(result) {
-        console.log('Education Expenditure vs NAPLAN Scores chart loaded successfully!');
-        view2 = result.view;
-      })
-      .catch(function(error) {
-        console.error('Error loading education chart:', error);
-      });
-
-    // Load the third visualization (grocery prices) from external JSON file
-    vegaEmbed('#vis3', 'Australian Cities Grocery Prices.json')
-      .then(function(result) {
-        console.log('Grocery Prices chart loaded successfully!');
-        view3 = result.view;
-      })
-      .catch(function(error) {
-        console.error('Error loading grocery prices chart:', error);
-      });
-
-    // Load the fourth visualization (energy mixes) from external JSON file
-    vegaEmbed('#vis4', 'Australian State Energy Mixes.json')
-      .then(function(result) {
-        console.log('Energy Mixes chart loaded successfully!');
-        view4 = result.view;
-      })
-      .catch(function(error) {
-        console.error('Error loading energy mixes chart:', error);
-      });
-
-    // Update slider display
-    const slider = document.getElementById('renewableSlider');
-    const sliderValue = document.getElementById('sliderValue');
-    
-    slider.addEventListener('input', function() {
-      sliderValue.textContent = this.value + '%';
-      
-      // Update the Vega-Lite parameter
-      if (view1) {
-        view1.signal('renewableFilter', parseInt(this.value)).run();
-      }
+  // Load the first visualization (map) from GitHub
+  vegaEmbed('#vis1', 'visualization.vl (3).json')
+    .then(function(result) {
+      console.log('Renewable Energy & CO2 Emissions map loaded successfully!');
+      view1 = result.view;
+    })
+    .catch(function(error) {
+      console.error('Error loading renewable energy map:', error);
     });
+
+  // Load the second visualization from GitHub
+  vegaEmbed('#vis2', 'visualization.vl (5).json')
+    .then(function(result) {
+      console.log('Education Expenditure vs NAPLAN Scores chart loaded successfully!');
+      view2 = result.view;
+    })
+    .catch(function(error) {
+      console.error('Error loading education chart:', error);
+    });
+
+  // Load the third visualization from GitHub
+  vegaEmbed('#vis3', 'Australian Cities Grocery Prices.json')
+    .then(function(result) {
+      console.log('Grocery Prices chart loaded successfully!');
+      view3 = result.view;
+    })
+    .catch(function(error) {
+      console.error('Error loading grocery prices chart:', error);
+    });
+
+  // Load the fourth visualization from GitHub
+  vegaEmbed('#vis4','Australian State Energy Mixes.json')
+    .then(function(result) {
+      console.log('Energy Mixes chart loaded successfully!');
+      view4 = result.view;
+    })
+    .catch(function(error) {
+      console.error('Error loading energy mixes chart:', error);
+    });
+
+  // Update slider display and connect to Vega-Lite parameter
+  const slider = document.getElementById('renewableSlider');
+  const sliderValue = document.getElementById('sliderValue');
+
+  slider.addEventListener('input', function() {
+    sliderValue.textContent = this.value + '%';
+    
+    // Update the Vega-Lite parameter in the external visualization
+    if (view1) {
+      view1.signal('renewableFilter', parseInt(this.value)).run();
+    }
+  });
   </script>
 </body>
 </html>

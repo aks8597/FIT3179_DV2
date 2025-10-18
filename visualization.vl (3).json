@@ -4,6 +4,12 @@
   "height": 500,
   "title": "Renewable Energy Usage and CO2 Emissions Across Australian States (2024)",
   "background": "lightblue",
+  "params": [
+    {
+      "name": "renewableFilter",
+      "value": 0
+    }
+  ],
   "layer": [
     {
       "data": {"graticule": true},
@@ -51,6 +57,9 @@
             "key": "State",
             "fields": ["Renewable"]
           }
+        },
+        {
+          "filter": "datum.Renewable >= renewableFilter"
         }
       ],
       "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 1.5},
@@ -159,7 +168,7 @@
           {
             "field": "CO2_Emissions_Clean",
             "type": "quantitative",
-            "title": " State CO2 Emissions",
+            "title": " State CO2 Emissions (million tonnes)",
             "format": ".1f"
           }
         ]

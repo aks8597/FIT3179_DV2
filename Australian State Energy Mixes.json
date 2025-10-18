@@ -30,7 +30,8 @@
           "innerRadius": 50,
           "outerRadius": 70,
           "stroke": "#fff",
-          "strokeWidth": 1
+          "strokeWidth": 1,
+          "tooltip": true
         },
         "encoding": {
           "theta": {
@@ -47,7 +48,12 @@
             },
             "title": "Energy Type",
             "legend": {"orient": "bottom", "columns": 2}
-          }
+          },
+          "tooltip": [
+            {"field": "State", "type": "nominal", "title": "State"},
+            {"field": "EnergyType", "type": "nominal", "title": "Energy Type"},
+            {"field": "Percentage", "type": "quantitative", "title": "Percentage", "format": ".1f"}
+          ]
         }
       },
       {
