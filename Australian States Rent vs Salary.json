@@ -27,15 +27,24 @@
           "title": "State/Territory",
           "sort": "-x"
         },
-        "color": {"value": "#95a5a6"}
+        "color": {"value": "#95a5a6"} 
       }
     },
     {
+      "transform": [{ "calculate": "'Median Rent'", "as": "Legend" }],
       "mark": {"type": "point", "filled": true, "size": 80},
       "encoding": {
         "x": {"field": "Median Weekly Rent ($)", "type": "quantitative"},
         "y": {"field": "State", "type": "nominal"},
-        "color": {"value": "#e74c3c"},
+        "color": {
+          "field": "Legend",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Median Rent", "Average Salary"],
+            "range": ["#e74c3c", "#2ecc71"]
+          },
+          "legend": {"title": "Measure"}
+        },
         "tooltip": [
           {"field": "State", "title": "State"},
           {"field": "Median Weekly Rent ($)", "title": "Rent", "format": "$.0f"}
@@ -43,11 +52,20 @@
       }
     },
     {
+      "transform": [{ "calculate": "'Average Salary'", "as": "Legend" }],
       "mark": {"type": "point", "filled": true, "size": 80},
       "encoding": {
         "x": {"field": "Average Weekly Salary ($)", "type": "quantitative"},
         "y": {"field": "State", "type": "nominal"},
-        "color": {"value": "#2ecc71"},
+        "color": {
+          "field": "Legend",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Median Rent", "Average Salary"],
+            "range": ["#e74c3c", "#2ecc71"]
+          },
+          "legend": {"title": "Measure"}
+        },
         "tooltip": [
           {"field": "State", "title": "State"},
           {
@@ -64,7 +82,7 @@
       }
     }
   ],
-  "width": 600,
+  "width": 500,
   "height": 400,
   "config": {
     "axis": {"labelFontSize": 11, "titleFontSize": 12},

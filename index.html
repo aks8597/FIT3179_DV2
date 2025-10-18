@@ -186,6 +186,27 @@
       </div>
     </div>
 
+    <!-- New Sixth Visualization - Salary vs Rent -->
+    <div class="visualization">
+      <h2>Salary vs Rent: Cost of Living Across Australian States</h2>
+      
+      <div class="description">
+        <p>This lollipop chart compares average weekly salaries with median weekly rents across Australian states and territories. The lines show the gap between income and housing costs, with green dots representing salaries and red dots representing rent payments.</p>
+      </div>
+      
+      <div class="vis-container">
+        <div class="vis-wrapper">
+          <div id="vis6"></div>
+        </div>
+        <div class="annotation-side">
+          <h4>Key Insights:</h4>
+          <p class="annotation">ACT has the highest salary and a substantial disposable income gap after rent, making it financially favorable despite higher absolute costs.</p>
+          <p class="annotation">Tasmania shows the smallest salary but also the lowest rent costs, creating a balanced affordability situation for residents.</p>
+          <p class="annotation">New South Wales, despite having high salaries, faces significant housing costs that reduce the disposable income advantage.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Third Visualization - Grocery Prices -->
     <div class="visualization">
       <h2>Grocery Prices Across Major Australian Cities in 2024</h2>
@@ -217,7 +238,7 @@
   </div>
   
   <script type="text/javascript">
-    let view1, view2, view3, view4, view5;
+    let view1, view2, view3, view4, view5, view6;
     
 
   // Load the first visualization (map) from GitHub
@@ -268,6 +289,16 @@
     })
     .catch(function(error) {
       console.error('Error loading Year 12 qualification chart:', error);
+    });
+
+  // Load the sixth visualization from GitHub
+  vegaEmbed('#vis6','Australian States Rent vs Salary.json')
+    .then(function(result) {
+      console.log('Salary vs Rent chart loaded successfully!');
+      view6 = result.view;
+    })
+    .catch(function(error) {
+      console.error('Error loading salary vs rent chart:', error);
     });
 
   // Update slider display and connect to Vega-Lite parameter
