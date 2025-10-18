@@ -15,12 +15,8 @@
       "as": ["Grocery Item", "Price"]
     },
     {
-      "fold": [
-        "Milk (1L) in AUD$",
-        "Loaf of Fresh White Bread (AUD$)",
-        "12 Eggs (AUD$)"
-      ],
-      "as": ["Grocery Item", "Price"]
+      "calculate": "if(datum['Grocery Item'] == 'Milk (1L) in AUD$', 'Milk (1L)', if(datum['Grocery Item'] == 'Loaf of Fresh White Bread (AUD$)', 'Bread', 'Eggs'))",
+      "as": "Grocery Item Clean"
     }
   ],
   "mark": "bar",
@@ -52,7 +48,21 @@
         "labelExpr": "if(datum.value == 'Milk (1L) in AUD$', 'Milk (1L)', if(datum.value == 'Loaf of Fresh White Bread (AUD$)', 'Bread', 'Eggs'))"
       }
     },
-    "xOffset": {"field": "Grocery Item"}
+    "xOffset": {"field": "Grocery Item"},
+    "tooltip": [
+      {"field": "Major Cities", "type": "nominal", "title": "City"},
+      {
+        "field": "Grocery Item Clean",
+        "type": "nominal",
+        "title": "Grocery Item"
+      },
+      {
+        "field": "Price",
+        "type": "quantitative",
+        "title": "Price (AUD)",
+        "format": "$.2f"
+      }
+    ]
   },
   "width": 600,
   "height": 400,
