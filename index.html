@@ -6,87 +6,85 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      background-color: #f5f5f5;
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .visualization {
-      background-color: white;
-      padding: 25px;
-      margin-bottom: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #2c3e50;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    h2 {
-      color: #34495e;
-      border-bottom: 2px solid #3498db;
-      padding-bottom: 10px;
-    }
-    .description {
-      background-color: #f8f9fa;
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      border-left: 4px solid #3498db;
-    }
-    .annotation {
-      font-style: italic;
-      color: #555;
-      margin: 15px 0;
-      padding: 10px;
-      border-left: 3px solid #3498db;
-      background-color: #f8f9fa;
-    }
-    .vis-container {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-    .vis-wrapper {
-      flex: 1;
-    }
-    .annotation-side {
-      flex: 0 0 300px;
-      padding: 15px;
-      background-color: #f8f9fa;
-      border-radius: 5px;
-    }
-    .slider-container {
-      background-color: #e8f4fc;
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      border: 1px solid #b3e0ff;
-    }
-    /* New styles for full-width visualization */
-    .full-width-vis {
-      width: 100%;
-    }
-    .annotations-below {
-      display: flex;
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .annotation-below {
-      flex: 1;
-      font-style: italic;
-      color: #555;
-      padding: 15px;
-      border-left: 3px solid #3498db;
-      background-color: #f8f9fa;
-      border-radius: 5px;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f5f5f5;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .visualization {
+    background-color: white;
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  h2 {
+    color: #34495e;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+  }
+  .description {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border-left: 4px solid #3498db;
+  }
+  .annotation {
+    color: #555;
+    margin: 15px 0;
+    padding: 10px;
+    border-left: 3px solid #3498db;
+    background-color: #f8f9fa;
+  }
+  .vis-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .vis-wrapper {
+    flex: 1;
+  }
+  .annotation-side {
+    flex: 0 0 300px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+  }
+  .slider-container {
+    background-color: #e8f4fc;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #b3e0ff;
+  }
+  /* New styles for full-width visualization */
+  .full-width-vis {
+    width: 100%;
+  }
+  .annotations-below {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .annotation-below {
+    flex: 1;
+    color: #555;
+    padding: 15px;
+    border-left: 3px solid #3498db;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+  }
   </style>
 </head>
 <body>
@@ -247,12 +245,26 @@
       </div>
     </div>
     
-    <!-- Data Sources -->
-    <div class="visualization">
-      <h2>Data Sources and Methodology</h2>
-      <div class="description">
-        <p><strong>Data Sources:</strong> Australian Energy Statistics (2024), Australian Government Clean Energy Regulator (2025), Australian Statistical Geography Standard (ASGS), Australian Curriculum Assessment and Reporting Authority (NAPLAN), Australian Government Education Funding, Jacaranda Finance (2024)</p>
-      </div>
+  <!-- Metadata -->
+  <div class="visualization">
+    <h2>About This Dashboard</h2>
+    <div class="description">
+      <p><strong>Author:</strong> Amnaaz Shergill</p>
+      <p><strong>Date:</strong> 19 October 2025</p>
+      <p><strong>Note:</strong> All sources accurate as per years specified under visualisations</p>
+      
+      <h4>Data Sources:</h4>
+      <ul>
+        <li>Australian Energy Statistics: <a href="https://www.energy.gov.au/energy-data/australian-energy-statistics/states-and-territories" target="_blank">https://www.energy.gov.au/energy-data/australian-energy-statistics/states-and-territories</a></li>
+        <li>Victoria Greenhouse Gas Emissions: <a href="https://www.climatechange.vic.gov.au/greenhouse-gas-emissions" target="_blank">https://www.climatechange.vic.gov.au/greenhouse-gas-emissions</a></li>
+        <li>Clean Energy Regulator Data: <a href="https://cer.gov.au/markets/reports-and-data/nger-reporting-data-and-registers/2023-24-published-data-highlights" target="_blank">https://cer.gov.au/markets/reports-and-data/nger-reporting-data-and-registers/2023-24-published-data-highlights</a></li>
+        <li>Cost of Living Data: <a href="https://www.jacarandafinance.com.au/general/cost-of-living-in-australia/" target="_blank">https://www.jacarandafinance.com.au/general/cost-of-living-in-australia/</a></li>
+        <li>Education Attainment: <a href="https://www.abs.gov.au/statistics/measuring-what-matters/measuring-what-matters-themes-and-indicators/prosperous/education-attainment" target="_blank">https://www.abs.gov.au/statistics/measuring-what-matters/measuring-what-matters-themes-and-indicators/prosperous/education-attainment</a></li>
+        <li>Rental Market Insights: <a href="https://www.abs.gov.au/articles/latest-insights-rental-market" target="_blank">https://www.abs.gov.au/articles/latest-insights-rental-market</a></li>
+        <li>Average Salary by State: <a href="https://www.forbes.com/advisor/au/personal-finance/average-salary-by-state-australia/#scrollto_average_salary_in_australia_by_state_section" target="_blank">https://www.forbes.com/advisor/au/personal-finance/average-salary-by-state-australia/</a></li>
+        <li>National Greenhouse Accounts: <a href="https://www.dcceew.gov.au/climate-change/publications/national-greenhouse-accounts-2020/state-and-territory-greenhouse-gas-inventories-annual-emissions" target="_blank">https://www.dcceew.gov.au/climate-change/publications/national-greenhouse-accounts-2020/state-and-territory-greenhouse-gas-inventories-annual-emissions</a></li>
+        <li>NAPLAN National Results: <a href="https://www.acara.edu.au/reporting/national-report-on-schooling-in-australia/naplan-national-results" target="_blank">https://www.acara.edu.au/reporting/national-report-on-schooling-in-australia/naplan-national-results</a></li>
+      </ul>
     </div>
   </div>
   
