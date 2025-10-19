@@ -145,6 +145,25 @@
         </div>
       </div>
     </div>
+
+    <!-- New Seventh Visualization - CO2 Emissions Over Time -->
+    <div class="visualization">
+      <h2>Australia's CO2 Emissions Trend (2010-2020)</h2>
+      
+      <div class="description">
+        <p>This area chart shows Australia's CO2 emissions in million tonnes over the past decade. The visualization tracks the country's progress in reducing carbon emissions and highlights the overall downward trend in environmental impact.</p>
+      </div>
+      
+      <div class="vis-container">
+        <div class="vis-wrapper">
+          <div id="vis7"></div>
+        </div>
+        <div class="annotation-side">
+          <h4>Key Insight:</h4>
+          <p class="annotation">Australia achieved a significant 19% reduction in CO2 emissions between 2010 and 2020, dropping from 615 million tonnes to 498.1 million tonnes. This demonstrates substantial progress in environmental sustainability and emission reduction efforts over the decade.</p>
+        </div>
+      </div>
+    </div>
     
     <!-- Second Visualization - Education Expenditure vs NAPLAN Scores -->
     <div class="visualization">
@@ -238,7 +257,7 @@
   </div>
   
   <script type="text/javascript">
-    let view1, view2, view3, view4, view5, view6;
+    let view1, view2, view3, view4, view5, view6, view7;
     
 
   // Load the first visualization (map) from GitHub
@@ -299,6 +318,16 @@
     })
     .catch(function(error) {
       console.error('Error loading salary vs rent chart:', error);
+    });
+
+  // Load the seventh visualization from GitHub
+  vegaEmbed('#vis7','Australia CO2 emissions Overtime.json')
+    .then(function(result) {
+      console.log('CO2 Emissions Over Time chart loaded successfully!');
+      view7 = result.view;
+    })
+    .catch(function(error) {
+      console.error('Error loading CO2 emissions chart:', error);
     });
 
   // Update slider display and connect to Vega-Lite parameter
