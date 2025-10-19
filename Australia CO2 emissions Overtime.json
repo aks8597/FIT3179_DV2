@@ -1,0 +1,48 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Australia's CO2 Emissions Over Time (2010-2020)",
+  "data": {
+    "url": "https://raw.githubusercontent.com/aks8597/FIT3179_DV2/refs/heads/main/aus_co2_emissions_overtime.csv"
+  },
+  "layer": [
+    {
+      "mark": {"type": "area", "opacity": 0.3, "color": "#e74c3c", "line": true}
+    },
+    {
+      "mark": {
+        "type": "line",
+        "point": {"filled": true, "color": "#e74c3c", "size": 60},
+        "strokeWidth": 3,
+        "color": "#e74c3c"
+      }
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "Years",
+      "type": "temporal",
+      "axis": {"title": "Year", "format": "%Y", "grid": false}
+    },
+    "y": {
+      "field": "CO2 Emissions (million tonnes)",
+      "type": "quantitative",
+      "axis": {"title": "CO2 Emissions (million tonnes)", "grid": true},
+      "scale": {"domain": [0, 800]}
+    },
+    "tooltip": [
+      {"field": "Years", "type": "temporal", "title": "Year", "format": "%Y"},
+      {
+        "field": "CO2 Emissions (million tonnes)",
+        "type": "quantitative",
+        "title": "CO2 Emissions",
+        "format": ".1f"
+      }
+    ]
+  },
+  "width": 600,
+  "height": 400,
+  "config": {
+    "axis": {"labelFontSize": 12, "titleFontSize": 14},
+    "title": {"fontSize": 16, "anchor": "middle", "offset": 20}
+  }
+}
